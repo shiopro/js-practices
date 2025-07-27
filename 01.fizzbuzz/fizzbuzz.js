@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 for (let num = 1; num <= 20; num++) {
   if (num % 15 === 0) {
     console.log("FizzBuzz");
