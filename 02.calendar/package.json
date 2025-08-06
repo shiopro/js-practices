@@ -4,20 +4,13 @@
     "lint": "prettier --check . && eslint ."
   },
   "devDependencies": {
-    "@eslint/js": "^9.32.0",
-    "eslint": "^9.32.0",
-    "eslint-config-prettier": "^9.1.2",
-    "globals": "^15.15.0",
-    "prettier": "^3.6.2"
+    "@eslint/js": "^9.16.0",
+    "eslint": "^9.16.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.13.0",
+    "prettier": "^3.4.2"
   },
   "type": "module",
-  "name": "02.calendar",
-  "version": "1.0.0",
-  "main": "eslint.config.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "minimist": "^1.2.8"
   }
