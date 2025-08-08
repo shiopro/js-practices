@@ -11,10 +11,8 @@ const month = argv.m ?? now.getMonth() + 1;
 const firstDay = new Date(year, month - 1, 1);
 const lastDay = new Date(year, month, 0);
 
-const weekHeader = ["日", "月", "火", "水", "木", "金", "土"];
-
 console.log(`      ${month}月 ${year}`);
-console.log(weekHeader.join(" "));
+console.log("日 月 火 水 木 金 土");
 
 let calendar = "";
 
