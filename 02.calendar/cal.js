@@ -21,7 +21,11 @@ for (let i = 0; i < firstDay.getDay(); i++) {
 }
 
 for (let day = 1; day <= lastDay.getDate(); day++) {
-  calendar += `${day.toString().padStart(2, " ")} `;
+  calendar += `${day.toString().padStart(2, " ")}`;
+
+  if (day !== lastDay.getDate()) {
+    calendar += " ";
+  }
 
   if ((firstDay.getDay() + day - 1) % 7 === 6) {
     calendar += "\n";
