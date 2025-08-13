@@ -21,7 +21,7 @@ for (let i = 0; i < firstDay.getDay(); i++) {
 }
 
 for (let dateNum = 1; dateNum <= lastDay.getDate(); dateNum++) {
-  calendar += `${dateNum.toString().padStart(2, " ")}`;
+  calendar += dateNum.toString().padStart(2, " ");
 
   if (dateNum !== lastDay.getDate()) {
     calendar += " ";
