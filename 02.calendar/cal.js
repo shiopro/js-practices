@@ -11,10 +11,11 @@ const month = argv.m ?? now.getMonth() + 1;
 const firstDay = new Date(year, month - 1, 1);
 const lastDay = new Date(year, month, 0);
 
-console.log(`      ${month}月 ${year}`);
-console.log("日 月 火 水 木 金 土");
-
 let calendar = "";
+
+calendar += `      ${month}月 ${year}\n`;
+
+calendar += "日 月 火 水 木 金 土\n";
 
 for (let i = 0; i < firstDay.getDay(); i++) {
   calendar += "   ";
