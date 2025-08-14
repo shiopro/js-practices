@@ -21,16 +21,16 @@ for (let i = 0; i < firstDay.getDay(); i++) {
 }
 
 for (let dateNum = 1; dateNum <= lastDay.getDate(); dateNum++) {
+  const dayOfWeek = (firstDay.getDay() + dateNum - 1) % 7;
+  const isSaturday = dayOfWeek === 6;
+
   calendar += dateNum.toString().padStart(2, " ");
 
-  if (
-    dateNum !== lastDay.getDate() &&
-    (firstDay.getDay() + dateNum - 1) % 7 !== 6
-  ) {
+  if (dateNum !== lastDay.getDate() && !isSaturday) {
     calendar += " ";
   }
 
-  if ((firstDay.getDay() + dateNum - 1) % 7 === 6) {
+  if (isSaturday) {
     calendar += "\n";
   }
 }
