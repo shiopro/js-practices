@@ -23,10 +23,11 @@ for (let d = new Date(firstDay); d <= lastDay; d.setDate(d.getDate() + 1)) {
   const dateNum = d.getDate();
   const dayOfWeek = d.getDay();
   const isSaturday = dayOfWeek === 6;
+  const isLastDate = dateNum === lastDay.getDate();
 
   calendar += dateNum.toString().padStart(2, " ");
 
-  if (dateNum !== lastDay.getDate() && !isSaturday) {
+  if (!isLastDate && !isSaturday) {
     calendar += " ";
   }
 
