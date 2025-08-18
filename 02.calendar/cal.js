@@ -27,12 +27,10 @@ for (let d = new Date(firstDay); d <= lastDay; d.setDate(d.getDate() + 1)) {
 
   calendar += dateNum.toString().padStart(2, " ");
 
-  if (!isLastDate && !isSaturday) {
-    calendar += " ";
-  }
-
   if (isSaturday) {
     calendar += "\n";
+  } else if (!isLastDate) {
+    calendar += " ";
   }
 }
 
