@@ -19,9 +19,13 @@ for (let i = 0; i < firstDay.getDay(); i++) {
   calendar += "   ";
 }
 
-for (let d = new Date(firstDay); d <= lastDay; d.setDate(d.getDate() + 1)) {
-  const dateNum = d.getDate();
-  const dayOfWeek = d.getDay();
+for (
+  let currentDate = new Date(firstDay);
+  currentDate <= lastDay;
+  currentDate.setDate(currentDate.getDate() + 1)
+) {
+  const dateNum = currentDate.getDate();
+  const dayOfWeek = currentDate.getDay();
   const isSaturday = dayOfWeek === 6;
   const isLastDate = dateNum === lastDay.getDate();
 
