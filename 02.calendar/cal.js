@@ -8,12 +8,12 @@ const now = new Date();
 const year = argv.y ?? now.getFullYear();
 const month = argv.m ?? now.getMonth() + 1;
 
-const firstDay = new Date(year, month - 1, 1);
-const lastDay = new Date(year, month, 0);
-
 let calendar = "";
 calendar += `      ${month}月 ${year}\n`;
 calendar += "日 月 火 水 木 金 土\n";
+
+const firstDay = new Date(year, month - 1, 1);
+const lastDay = new Date(year, month, 0);
 
 for (let i = 0; i < firstDay.getDay(); i++) {
   calendar += "   ";
