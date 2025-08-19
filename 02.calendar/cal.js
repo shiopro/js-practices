@@ -24,16 +24,14 @@ for (
   currentDate <= lastDay;
   currentDate.setDate(currentDate.getDate() + 1)
 ) {
-  const dateNum = currentDate.getDate();
-  const dayOfWeek = currentDate.getDay();
-  const isSaturday = dayOfWeek === 6;
-  const isLastDate = dateNum === lastDay.getDate();
+  calendar += currentDate.getDate().toString().padStart(2, " ");
 
-  calendar += dateNum.toString().padStart(2, " ");
-
-  if (isSaturday) {
+  if (
+    currentDate.getDay() === 6 ||
+    currentDate.getDate() === lastDay.getDate()
+  ) {
     calendar += "\n";
-  } else if (!isLastDate) {
+  } else {
     calendar += " ";
   }
 }
