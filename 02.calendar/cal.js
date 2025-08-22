@@ -12,23 +12,23 @@ let calendar = "";
 calendar += `      ${month}月 ${year}\n`;
 calendar += "日 月 火 水 木 金 土\n";
 
-const firstDay = new Date(year, month - 1, 1);
-const lastDay = new Date(year, month, 0);
+const firstDate = new Date(year, month - 1, 1);
+const lastDate = new Date(year, month, 0);
 
-for (let i = 0; i < firstDay.getDay(); i++) {
+for (let i = 0; i < firstDate.getDay(); i++) {
   calendar += "   ";
 }
 
 for (
-  let currentDate = new Date(firstDay);
-  currentDate <= lastDay;
+  let currentDate = new Date(firstDate);
+  currentDate <= lastDate;
   currentDate.setDate(currentDate.getDate() + 1)
 ) {
   calendar += currentDate.getDate().toString().padStart(2, " ");
 
   if (
     currentDate.getDay() === 6 ||
-    currentDate.getDate() === lastDay.getDate()
+    currentDate.getDate() === lastDate.getDate()
   ) {
     calendar += "\n";
   } else {
