@@ -19,6 +19,10 @@ run(
   })
   .then((rows) => {
     console.log("全体:", rows);
+    return run("DROP TABLE books");
+  })
+  .then(() => {
+    console.log("テーブルを削除しました");
   })
   .catch((error) => {
     console.error("エラー:", error.message);
