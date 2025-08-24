@@ -12,9 +12,9 @@ run(
   .catch((error) => {
     console.error("UNIQUE エラー:", error.message);
   })
-  .then(() => get("SELECT * FROM books WHERE title = ?", ["Book"]))
-  .then((row) => {
-    console.log("取得:", row);
+  .then(() => get("SELECT * FROM users"))
+  .catch((error) => {
+    console.error("取得エラー:", error.message);
     return all("SELECT * FROM books");
   })
   .then((rows) => {
