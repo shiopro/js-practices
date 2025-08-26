@@ -7,7 +7,7 @@ db.run(
   () => {
     console.log("テーブル作成成功");
 
-    db.run("INSERT INTO books (title) VALUES (?)", function (error) {
+    db.run("INSERT INTO books (title) VALUES (?)", [null], function (error) {
       if (error) {
         console.error("レコード追加エラー:", error.message);
       }
