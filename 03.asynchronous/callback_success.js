@@ -11,7 +11,7 @@ db.run(
       console.log("追加したレコードのID:", this.lastID);
 
       db.all("SELECT * FROM books", (_, rows) => {
-        console.log("取得したレコード:", rows);
+        console.log("全体のレコード:", rows);
 
         db.run("DROP TABLE books", () => {
           console.log("テーブル削除成功");

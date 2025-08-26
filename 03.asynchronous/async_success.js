@@ -5,22 +5,25 @@ async function main() {
     await run(
       "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
     );
+    console.log("テーブル作成成功");
 
-    await run("INSERT INTO books (title) VALUES (?)", ["Book"]);
+    const result = await run("INSERT INTO books (title) VALUES (?)", ["Book"]);
+    console.log("追加したレコードのID:", result.lastID);
 
     const row = await get("SELECT * FROM books WHERE title = ?", ["Book"]);
-    console.log("取得:", row);
+    console.log("取得したレコード:", row);
 
     const rows = await all("SELECT * FROM books");
-    console.log("全体:", rows);
+    console.log("全体のレコード:", rows);
 
-    await run("DROP TABLE books");
-    console.log("テーブルを削除しました");
+    try {
+      await run("DROP TABLE books");
+      console.log("テーブル削除成功");
+    } finally {
+      await close();
+    }
   } catch (error) {
     console.error("エラー:", error.message);
-  } finally {
-    await close();
-    console.log("DB接続を閉じました");
   }
 }
 

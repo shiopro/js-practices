@@ -1,34 +1,26 @@
-import { run, get, all, close } from "./db.js";
+import { run, get, close } from "./db.js";
 
 run(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 )
-  .then(() => run("INSERT INTO books (title) VALUES (?)", [null]))
-  .catch((error) => {
-    console.error("NOT NULLエラー:", error.message);
+  .then(() => {
+    console.log("テーブル作成成功");
+    return run("INSERT INTO books (title) VALUES (?)", [null]);
   })
-  .then(() => run("INSERT INTO books (title) VALUES (?)", ["Book"]))
-  .then(() => run("INSERT INTO books (title) VALUES (?)", ["Book"]))
   .catch((error) => {
-    console.error("UNIQUE エラー:", error.message);
+    console.error("レコード追加エラー:", error.message);
   })
   .then(() => get("SELECT * FROM users"))
   .catch((error) => {
     console.error("取得エラー:", error.message);
-    return all("SELECT * FROM books");
-  })
-  .then((rows) => {
-    console.log("全体:", rows);
     return run("DROP TABLE books");
   })
   .then(() => {
-    console.log("テーブルを削除しました");
+    console.log("テーブル削除成功");
   })
   .catch((error) => {
     console.error("エラー:", error.message);
   })
   .finally(() => {
-    close()
-      .then(() => console.log("DB接続を閉じました"))
-      .catch((error) => console.error("close() エラー:", error));
+    close().catch((error) => console.error("close() エラー:", error));
   });

@@ -14,7 +14,7 @@ db.run(
 
       db.all("SELECT * FROM users", (error) => {
         if (error) {
-          console.error("取得したレコード:", error.message);
+          console.error("取得エラー:", error.message);
 
           db.run("DROP TABLE books", () => {
             console.log("テーブル削除成功");
