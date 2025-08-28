@@ -11,17 +11,14 @@ db.run(
       if (error) {
         console.error("レコード追加エラー:", error.message);
       }
+      db.get("SELECT * FROM users", (error) => {
+        console.error("取得エラー:", error.message);
 
-      db.all("SELECT * FROM users", (error) => {
-        if (error) {
-          console.error("取得エラー:", error.message);
+        db.run("DROP TABLE books", () => {
+          console.log("テーブル削除成功");
 
-          db.run("DROP TABLE books", () => {
-            console.log("テーブル削除成功");
-
-            db.close();
-          });
-        }
+          db.close();
+        });
       });
     });
   },

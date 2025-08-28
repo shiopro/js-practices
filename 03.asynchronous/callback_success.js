@@ -10,13 +10,17 @@ db.run(
     db.run("INSERT INTO books (title) VALUES (?)", ["Book"], function () {
       console.log("追加したレコードのID:", this.lastID);
 
-      db.all("SELECT * FROM books", (_, rows) => {
-        console.log("全体のレコード:", rows);
+      db.get("SELECT * FROM books WHERE title = ?", ["Book"], (_, row) => {
+        console.log("取得したレコード:", row);
 
-        db.run("DROP TABLE books", () => {
-          console.log("テーブル削除成功");
+        db.all("SELECT * FROM books", (_, rows) => {
+          console.log("全体のレコード:", rows);
 
-          db.close();
+          db.run("DROP TABLE books", () => {
+            console.log("テーブル削除成功");
+
+            db.close();
+          });
         });
       });
     });
