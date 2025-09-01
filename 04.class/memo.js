@@ -39,6 +39,13 @@ class MemoApp {
     }
   }
 
+  async listMemos(options) {
+    const sql = options.l
+      ? `SELECT id, CASE WHEN INSTR(memo, '\n') > 1 THEN SUBSTR(memo, 1, INSTR(memo, '\n') - 1) ELSE memo END AS firstLine FROM memos`
+      : "SELECT id, memo FROM memos";
+    return await this.db.all(sql);
+  }
+
   async close() {
     if (this.db) {
       try {
@@ -58,21 +65,39 @@ async function main() {
     output: process.stdout,
   });
 
+  const options = {};
+  if (process.argv.includes("-l")) {
+    options.l = true;
+  }
+
   try {
     await memoApp.connect();
-    console.log("メモを入力してください（複数行可、終了は END と入力）：");
 
-    let buffer = "";
-
-    rl.on("line", async (line) => {
-      if (line.trim() === "END") {
-        await memoApp.addMemo(buffer.trim());
-        console.log("メモを保存しました！");
-        buffer = "";
-        return;
+    if (options.l) {
+      const memos = await memoApp.listMemos(options);
+      if (memos.length === 0) {
+        console.log("メモはまだありません");
+      } else {
+        memos.forEach((memo) => {
+          const firstLine = options.l ? memo.firstLine : memo.memo;
+          console.log(`${firstLine}`);
+        });
       }
-      buffer += line + "\n";
-    });
+    } else {
+      console.log("メモを入力してください（複数行可、終了は END と入力）：");
+      let buffer = "";
+
+      rl.on("line", async (line) => {
+        if (line.trim() === "END") {
+          await memoApp.addMemo(buffer.trim());
+          console.log("メモを保存しました！");
+          buffer = "";
+          return;
+        }
+        buffer += line + "\n";
+      });
+    }
+
     rl.on("close", async () => {
       await memoApp.close();
     });
