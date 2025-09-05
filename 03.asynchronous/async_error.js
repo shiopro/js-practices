@@ -20,7 +20,7 @@ async function main() {
     try {
       await get(db, "SELECT * FROM users");
     } catch (error) {
-      console.error("取得エラー:", error.message);
+      console.error("レコード取得エラー:", error.message);
     }
 
     try {

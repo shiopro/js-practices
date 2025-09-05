@@ -11,7 +11,7 @@ db.run(
       console.error("レコード追加エラー:", error.message);
 
       db.get("SELECT * FROM users", (error) => {
-        console.error("取得エラー:", error.message);
+        console.error("レコード取得エラー:", error.message);
 
         db.run("DROP TABLE books", () => {
           console.log("テーブル削除成功");

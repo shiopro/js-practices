@@ -16,7 +16,7 @@ run(
   })
   .then(() => get(db, "SELECT * FROM users"))
   .catch((error) => {
-    console.error("取得エラー:", error.message);
+    console.error("レコード取得エラー:", error.message);
     return run(db, "DROP TABLE books");
   })
   .then(() => {
