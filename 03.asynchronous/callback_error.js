@@ -8,9 +8,8 @@ db.run(
     console.log("テーブル作成成功");
 
     db.run("INSERT INTO books (title) VALUES (?)", [null], function (error) {
-      if (error) {
-        console.error("レコード追加エラー:", error.message);
-      }
+      console.error("レコード追加エラー:", error.message);
+
       db.get("SELECT * FROM users", (error) => {
         console.error("取得エラー:", error.message);
 
