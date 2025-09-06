@@ -27,5 +27,5 @@ run(
     console.log("テーブル削除成功");
   })
   .finally(() => {
-    close(db).catch((error) => console.error("close() エラー:", error));
+    close(db);
   });

@@ -26,5 +26,5 @@ run(
     console.error("エラー:", error.message);
   })
   .finally(() => {
-    close(db).catch((error) => console.error("close() エラー:", error));
+    close(db);
   });
