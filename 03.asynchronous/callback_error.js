@@ -8,10 +8,22 @@ db.run(
     console.log("テーブル作成成功");
 
     db.run("INSERT INTO books (title) VALUES (?)", [null], function (error) {
-      console.error("レコード追加エラー:", error.message);
+      if (error) {
+        if (error.message.includes("NOT NULL")) {
+          console.error("レコード追加エラー:", error.message);
+        } else {
+          throw error;
+        }
+      }
 
       db.get("SELECT * FROM users", (error) => {
-        console.error("レコード取得エラー:", error.message);
+        if (error) {
+          if (error.message.includes("no such table")) {
+            console.error("レコード取得エラー:", error.message);
+          } else {
+            throw error;
+          }
+        }
 
         db.run("DROP TABLE books", () => {
           console.log("テーブル削除成功");

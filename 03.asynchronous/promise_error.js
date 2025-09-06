@@ -12,18 +12,23 @@ run(
     return run(db, "INSERT INTO books (title) VALUES (?)", [null]);
   })
   .catch((error) => {
-    console.error("レコード追加エラー:", error.message);
+    if (error.message.includes("NOT NULL")) {
+      console.error("レコード追加エラー:", error.message);
+    } else {
+      throw error;
+    }
   })
   .then(() => get(db, "SELECT * FROM users"))
   .catch((error) => {
-    console.error("レコード取得エラー:", error.message);
-    return run(db, "DROP TABLE books");
+    if (error.message.includes("no such table")) {
+      console.error("レコード取得エラー:", error.message);
+      return run(db, "DROP TABLE books");
+    } else {
+      throw error;
+    }
   })
   .then(() => {
     console.log("テーブル削除成功");
-  })
-  .catch((error) => {
-    console.error("エラー:", error.message);
   })
   .finally(() => {
     close(db);
