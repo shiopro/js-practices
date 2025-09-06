@@ -13,8 +13,8 @@ run(
   })
   .then((result) => {
     console.log("追加したレコードのID:", result.lastID);
+    return get(db, "SELECT * FROM books WHERE title = ?", ["Book"]);
   })
-  .then(() => get(db, "SELECT * FROM books WHERE title = ?", ["Book"]))
   .then((row) => {
     console.log("取得したレコード:", row);
     return all(db, "SELECT * FROM books");
