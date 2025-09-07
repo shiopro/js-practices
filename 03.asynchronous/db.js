@@ -4,7 +4,7 @@ export function run(db, sql, params) {
       if (error) {
         reject(error);
       } else {
-        resolve({ lastID: this.lastID, changes: this.changes });
+        resolve(this);
       }
     });
   });
