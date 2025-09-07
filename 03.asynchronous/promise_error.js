@@ -14,6 +14,7 @@ run(
   .catch((error) => {
     if (error.message.includes("NOT NULL")) {
       console.error("レコード追加エラー:", error.message);
+      return;
     } else {
       throw error;
     }
@@ -22,7 +23,7 @@ run(
   .catch((error) => {
     if (error.message.includes("no such table")) {
       console.error("レコード取得エラー:", error.message);
-      return run(db, "DROP TABLE books");
+      return;
     } else {
       throw error;
     }
