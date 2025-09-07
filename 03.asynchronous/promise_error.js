@@ -31,5 +31,5 @@ run(
     console.log("テーブル削除成功");
   })
   .finally(() => {
-    close(db);
+    return close(db);
   });
