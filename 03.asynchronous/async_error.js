@@ -12,7 +12,7 @@ console.log("テーブル作成成功");
 try {
   await run(db, "INSERT INTO books (title) VALUES (?)", [null]);
 } catch (error) {
-  if (error.message.includes("NOT NULL")) {
+  if (error instanceof Error && error.message.includes("NOT NULL")) {
     console.error("レコード追加エラー:", error.message);
   } else {
     throw error;
@@ -22,7 +22,7 @@ try {
 try {
   await get(db, "SELECT * FROM users");
 } catch (error) {
-  if (error.message.includes("no such table")) {
+  if (error instanceof Error && error.message.includes("no such table")) {
     console.error("レコード取得エラー:", error.message);
   } else {
     throw error;
