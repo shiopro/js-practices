@@ -1,4 +1,4 @@
-export function run(db, sql, params = []) {
+export function run(db, sql, params) {
   return new Promise((resolve, reject) => {
     db.run(sql, params, function (error) {
       if (error) {
@@ -10,7 +10,7 @@ export function run(db, sql, params = []) {
   });
 }
 
-export function get(db, sql, params = []) {
+export function get(db, sql, params) {
   return new Promise((resolve, reject) => {
     db.get(sql, params, (error, row) => {
       if (error) {
@@ -22,7 +22,7 @@ export function get(db, sql, params = []) {
   });
 }
 
-export function all(db, sql, params = []) {
+export function all(db, sql, params) {
   return new Promise((resolve, reject) => {
     db.all(sql, params, (error, rows) => {
       if (error) {
