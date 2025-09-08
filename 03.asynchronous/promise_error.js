@@ -22,6 +22,7 @@ run(
   .catch((error) => {
     if (error instanceof Error && error.message.includes("no such table")) {
       console.error("レコード取得エラー:", error.message);
+      return run(db, "DROP TABLE books");
     } else {
       throw error;
     }
