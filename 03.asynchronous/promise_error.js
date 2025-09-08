@@ -14,16 +14,14 @@ run(
   .catch((error) => {
     if (error instanceof Error && error.message.includes("NOT NULL")) {
       console.error("レコード追加エラー:", error.message);
-      return;
+      return get(db, "SELECT * FROM users");
     } else {
       throw error;
     }
   })
-  .then(() => get(db, "SELECT * FROM users"))
   .catch((error) => {
     if (error instanceof Error && error.message.includes("no such table")) {
       console.error("レコード取得エラー:", error.message);
-      return;
     } else {
       throw error;
     }
