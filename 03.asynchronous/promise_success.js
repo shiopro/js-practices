@@ -26,6 +26,4 @@ run(
   .then(() => {
     console.log("テーブル削除成功");
   })
-  .finally(() => {
-    return close(db);
-  });
+  .finally(() => close(db));
