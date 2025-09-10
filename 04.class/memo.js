@@ -58,7 +58,34 @@ class MemoApp {
       rl.close();
     }
   }
+
+  async listMemos() {
+    try {
+      const rows = await new Promise((resolve, reject) => {
+        db.all("SELECT id, memo FROM memos", (error, rows) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(rows);
+          }
+        });
+      });
+
+      rows.forEach((row) => {
+        const firstLine = row.memo.split("\n")[0];
+        console.log(`${firstLine}`);
+      });
+    } catch (error) {
+      console.error("一覧取得失敗:", error.message);
+    }
+  }
 }
 
 const app = new MemoApp(db);
-await app.addMemo();
+const option = process.argv[2];
+
+if (option === "-l") {
+  await app.listMemos();
+} else {
+  await app.addMemo();
+}
