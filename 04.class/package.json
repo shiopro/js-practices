@@ -12,6 +12,7 @@
   },
   "type": "module",
   "dependencies": {
+    "inquirer": "^12.9.4",
     "sqlite3": "^5.1.7"
   }
 }

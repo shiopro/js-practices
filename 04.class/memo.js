@@ -2,6 +2,7 @@
 
 import sqlite3 from "sqlite3";
 import readline from "readline";
+import inquirer from "inquirer";
 
 const db = new sqlite3.Database("memo.db", (error) => {
   if (error) {
@@ -79,6 +80,39 @@ class MemoApp {
       console.error("一覧取得失敗:", error.message);
     }
   }
+
+  async readMemo() {
+    try {
+      const rows = await new Promise((resolve, reject) => {
+        db.all("SELECT id, memo FROM memos", (error, rows) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(rows);
+          }
+        });
+      });
+
+      const choices = rows.map((row) => ({
+        name: row.memo.split("\n")[0],
+        value: row.id,
+      }));
+
+      const answer = await inquirer.prompt([
+        {
+          type: "list",
+          name: "selectedMemo",
+          message: "Choose a note you want to see:",
+          choices: choices,
+        },
+      ]);
+
+      const selectedRow = rows.find((row) => row.id === answer.selectedMemo);
+      console.log(selectedRow.memo);
+    } catch (error) {
+      console.error("メモ参照失敗:", error.message);
+    }
+  }
 }
 
 const app = new MemoApp(db);
@@ -86,6 +120,8 @@ const option = process.argv[2];
 
 if (option === "-l") {
   await app.listMemos();
+} else if (option === "-r") {
+  await app.readMemo();
 } else {
   await app.addMemo();
 }
