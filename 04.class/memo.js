@@ -113,6 +113,47 @@ class MemoApp {
       console.error("メモ参照失敗:", error.message);
     }
   }
+
+  async deleteMemo() {
+    try {
+      const rows = await new Promise((resolve, reject) => {
+        db.all("SELECT id, memo FROM memos", (error, rows) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(rows);
+          }
+        });
+      });
+
+      const choices = rows.map((row) => ({
+        name: row.memo.split("\n")[0],
+        value: row.id,
+      }));
+
+      const answer = await inquirer.prompt([
+        {
+          type: "list",
+          name: "deleteId",
+          message: "Choose a memo you want to delete:",
+          choices: choices,
+        },
+      ]);
+
+      await new Promise((resolve, reject) => {
+        db.run("DELETE FROM memos WHERE id = ?", [answer.deleteId], (error) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve();
+          }
+        });
+      });
+      console.log("メモ削除成功");
+    } catch (error) {
+      console.error("メモ削除失敗:", error.message);
+    }
+  }
 }
 
 const app = new MemoApp(db);
@@ -122,6 +163,8 @@ if (option === "-l") {
   await app.listMemos();
 } else if (option === "-r") {
   await app.readMemo();
+} else if (option === "-d") {
+  await app.deleteMemo();
 } else {
   await app.addMemo();
 }
