@@ -44,7 +44,7 @@ class MemoApp {
       const memo = lines.join("\n");
 
       await new Promise((resolve, reject) => {
-        db.run("INSERT INTO memos (memo) VALUES (?)", [memo], (error) => {
+        this.db.run("INSERT INTO memos (memo) VALUES (?)", [memo], (error) => {
           if (error) {
             reject(error);
           } else {
@@ -63,7 +63,7 @@ class MemoApp {
   async listMemos() {
     try {
       const rows = await new Promise((resolve, reject) => {
-        db.all("SELECT id, memo FROM memos", (error, rows) => {
+        this.db.all("SELECT id, memo FROM memos", (error, rows) => {
           if (error) {
             reject(error);
           } else {
@@ -84,7 +84,7 @@ class MemoApp {
   async readMemo() {
     try {
       const rows = await new Promise((resolve, reject) => {
-        db.all("SELECT id, memo FROM memos", (error, rows) => {
+        this.db.all("SELECT id, memo FROM memos", (error, rows) => {
           if (error) {
             reject(error);
           } else {
@@ -117,7 +117,7 @@ class MemoApp {
   async deleteMemo() {
     try {
       const rows = await new Promise((resolve, reject) => {
-        db.all("SELECT id, memo FROM memos", (error, rows) => {
+        this.db.all("SELECT id, memo FROM memos", (error, rows) => {
           if (error) {
             reject(error);
           } else {
@@ -141,13 +141,17 @@ class MemoApp {
       ]);
 
       await new Promise((resolve, reject) => {
-        db.run("DELETE FROM memos WHERE id = ?", [answer.deleteId], (error) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve();
-          }
-        });
+        this.db.run(
+          "DELETE FROM memos WHERE id = ?",
+          [answer.deleteId],
+          (error) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve();
+            }
+          },
+        );
       });
       console.log("メモ削除成功");
     } catch (error) {
