@@ -1,27 +1,8 @@
 #!/usr/bin/env node
 
-import sqlite3 from "sqlite3";
+import db from "./db.js";
 import readline from "readline";
 import inquirer from "inquirer";
-
-const db = new sqlite3.Database("memo.db", (error) => {
-  if (error) {
-    console.error("DB接続エラー:", error.message);
-    process.exit(1);
-  }
-});
-
-db.run(
-  `CREATE TABLE IF NOT EXISTS memos (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  memo TEXT)`,
-  (error) => {
-    if (error) {
-      console.error("テーブル失敗:", error.message);
-      process.exit(1);
-    }
-  },
-);
 
 class MemoApp {
   constructor(db) {
