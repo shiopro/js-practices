@@ -22,13 +22,17 @@ class MemoApp {
       const memo = lines.join("\n");
 
       await new Promise((resolve, reject) => {
-        this.db.run("INSERT INTO memos (memo) VALUES (?)", [memo], (error) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve();
-          }
-        });
+        this.db.run(
+          "INSERT INTO memos (content) VALUES (?)",
+          [memo],
+          (error) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve();
+            }
+          },
+        );
       });
       console.log("メモを保存成功");
     } catch (error) {
@@ -41,7 +45,7 @@ class MemoApp {
   async listMemos() {
     try {
       const rows = await new Promise((resolve, reject) => {
-        this.db.all("SELECT id, memo FROM memos", (error, rows) => {
+        this.db.all("SELECT id, content FROM memos", (error, rows) => {
           if (error) {
             reject(error);
           } else {
@@ -51,7 +55,7 @@ class MemoApp {
       });
 
       rows.forEach((row) => {
-        const firstLine = row.memo.split("\n")[0];
+        const firstLine = row.content.split("\n")[0];
         console.log(`${firstLine}`);
       });
     } catch (error) {
@@ -62,7 +66,7 @@ class MemoApp {
   async readMemo() {
     try {
       const rows = await new Promise((resolve, reject) => {
-        this.db.all("SELECT id, memo FROM memos", (error, rows) => {
+        this.db.all("SELECT id, content FROM memos", (error, rows) => {
           if (error) {
             reject(error);
           } else {
@@ -72,7 +76,7 @@ class MemoApp {
       });
 
       const choices = rows.map((row) => ({
-        name: row.memo.split("\n")[0],
+        name: row.content.split("\n")[0],
         value: row.id,
       }));
 
@@ -86,7 +90,7 @@ class MemoApp {
       ]);
 
       const selectedRow = rows.find((row) => row.id === answer.selectedMemo);
-      console.log(selectedRow.memo);
+      console.log(selectedRow.content);
     } catch (error) {
       console.error("メモ参照失敗:", error.message);
     }
@@ -95,7 +99,7 @@ class MemoApp {
   async deleteMemo() {
     try {
       const rows = await new Promise((resolve, reject) => {
-        this.db.all("SELECT id, memo FROM memos", (error, rows) => {
+        this.db.all("SELECT id, content FROM memos", (error, rows) => {
           if (error) {
             reject(error);
           } else {
@@ -105,7 +109,7 @@ class MemoApp {
       });
 
       const choices = rows.map((row) => ({
-        name: row.memo.split("\n")[0],
+        name: row.content.split("\n")[0],
         value: row.id,
       }));
 

@@ -10,7 +10,7 @@ const db = new sqlite3.Database("memo.db", (error) => {
 db.run(
   `CREATE TABLE IF NOT EXISTS memos (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  memo TEXT)`,
+  content TEXT)`,
   (error) => {
     if (error) {
       console.error("テーブル作成失敗:", error.message);
