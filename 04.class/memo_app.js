@@ -15,7 +15,7 @@ class MemoApp {
       if (process.stdin.isTTY) {
         console.log("メモを入力してください(Ctrl+Dで終了):");
       }
-      let lines = [];
+      const lines = [];
 
       for await (const line of rl) {
         lines.push(line);
