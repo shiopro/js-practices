@@ -12,7 +12,9 @@ class MemoApp {
     });
 
     try {
-      console.log("メモを入力してください(Ctrl+Dで終了):");
+      if (process.stdin.isTTY) {
+        console.log("メモを入力してください(Ctrl+Dで終了):");
+      }
       let lines = [];
 
       for await (const line of rl) {
