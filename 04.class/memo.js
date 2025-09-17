@@ -2,8 +2,11 @@
 
 import db from "./db.js";
 import MemoApp from "./memo_app.js";
+import { readInput } from "./input.js";
+import MemoRepository from "./memo_repository.js";
 
-const app = new MemoApp(db);
+const repository = new MemoRepository(db);
+const app = new MemoApp(repository);
 const option = process.argv[2];
 
 if (option === "-l") {
@@ -13,5 +16,6 @@ if (option === "-l") {
 } else if (option === "-d") {
   await app.deleteMemo();
 } else {
-  await app.addMemo();
+  const inputLines = await readInput();
+  await app.addMemo(inputLines);
 }
