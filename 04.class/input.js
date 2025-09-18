@@ -20,6 +20,14 @@ async function readInput() {
   return lines;
 }
 
+async function buildChoices(repository) {
+  const rows = await repository.list();
+  return rows.map((row) => ({
+    name: row.content.split("\n")[0],
+    value: row.id,
+  }));
+}
+
 async function selectMemo(choices) {
   const answer = await inquirer.prompt([
     {
@@ -32,4 +40,4 @@ async function selectMemo(choices) {
   return answer.selectedMemo;
 }
 
-export { readInput, selectMemo };
+export { readInput, buildChoices, selectMemo };

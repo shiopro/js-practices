@@ -1,4 +1,4 @@
-import { selectMemo } from "./input.js";
+import { selectMemo, buildChoices } from "./input.js";
 
 class MemoApp {
   constructor(repository) {
@@ -30,14 +30,9 @@ class MemoApp {
 
   async readMemo() {
     try {
+      const choices = await buildChoices(this.repository);
       const rows = await this.repository.list();
-      const choices = rows.map((row) => ({
-        name: row.content.split("\n")[0],
-        value: row.id,
-      }));
-
       const selectedId = await selectMemo(choices);
-
       const selectedRow = rows.find((row) => row.id === selectedId);
       console.log(selectedRow.content);
     } catch (error) {
@@ -47,12 +42,7 @@ class MemoApp {
 
   async deleteMemo() {
     try {
-      const rows = await this.repository.list();
-      const choices = rows.map((row) => ({
-        name: row.content.split("\n")[0],
-        value: row.id,
-      }));
-
+      const choices = await buildChoices(this.repository);
       const deleteId = await selectMemo(choices);
       await this.repository.delete(deleteId);
 
