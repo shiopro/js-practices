@@ -28,13 +28,13 @@ class MemoApp {
 
   async listMemos() {
     try {
-      const rows = await this.repository.list();
-      if (rows.length === 0) {
+      const memoList = await this.repository.list();
+      if (memoList.length === 0) {
         throw new ValidationError("メモが存在しません");
       }
 
-      rows.forEach((row) => {
-        const firstLine = row.content.split("\n")[0];
+      memoList.forEach((memo) => {
+        const firstLine = memo.content.split("\n")[0];
         console.log(`${firstLine}`);
       });
     } catch (error) {
@@ -53,9 +53,9 @@ class MemoApp {
         throw new ValidationError("選択できるメモがありません");
       }
 
-      const rows = await this.repository.list();
+      const memoList = await this.repository.list();
       const selectedId = await selectMemo(choices);
-      const selectedRow = rows.find((row) => row.id === selectedId);
+      const selectedRow = memoList.find((memo) => memo.id === selectedId);
       console.log(selectedRow.content);
     } catch (error) {
       if (error instanceof ValidationError) {
