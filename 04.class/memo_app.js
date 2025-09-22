@@ -1,3 +1,4 @@
+import ValidationError from "./validation_error.js";
 import { selectMemo, buildChoices } from "./input.js";
 
 class MemoApp {
@@ -6,49 +7,83 @@ class MemoApp {
   }
 
   async addMemo(inputLines) {
+    const memo = inputLines.join("\n");
+
+    if (!memo.trim()) {
+      throw new ValidationError("メモが空です");
+    }
+
     try {
-      const memo = inputLines.join("\n");
       await this.repository.add(memo);
 
       console.log("メモを保存成功");
     } catch (error) {
-      console.error("メモ保存失敗:", error.message);
+      if (error instanceof ValidationError) {
+        console.error("メモ保存失敗:", error.message);
+      } else {
+        throw error;
+      }
     }
   }
 
   async listMemos() {
     try {
       const rows = await this.repository.list();
+      if (rows.length === 0) {
+        throw new ValidationError("メモが存在しません");
+      }
+
       rows.forEach((row) => {
         const firstLine = row.content.split("\n")[0];
         console.log(`${firstLine}`);
       });
     } catch (error) {
-      console.error("一覧取得失敗:", error.message);
+      if (error instanceof ValidationError) {
+        console.error("一覧取得失敗:", error.message);
+      } else {
+        throw error;
+      }
     }
   }
 
   async readMemo() {
     try {
       const choices = await buildChoices(this.repository);
+      if (choices.length === 0) {
+        throw new ValidationError("選択できるメモがありません");
+      }
+
       const rows = await this.repository.list();
       const selectedId = await selectMemo(choices);
       const selectedRow = rows.find((row) => row.id === selectedId);
       console.log(selectedRow.content);
     } catch (error) {
-      console.error("メモ参照失敗:", error.message);
+      if (error instanceof ValidationError) {
+        console.error("メモ参照失敗:", error.message);
+      } else {
+        throw error;
+      }
     }
   }
 
   async deleteMemo() {
     try {
       const choices = await buildChoices(this.repository);
+
+      if (choices.length === 0) {
+        throw new ValidationError("削除できるメモがありません");
+      }
+
       const deleteId = await selectMemo(choices);
       await this.repository.delete(deleteId);
 
       console.log("メモ削除成功");
     } catch (error) {
-      console.error("メモ削除失敗:", error.message);
+      if (error instanceof ValidationError) {
+        console.error("メモ削除失敗:", error.message);
+      } else {
+        throw error;
+      }
     }
   }
 }
