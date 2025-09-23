@@ -32,7 +32,7 @@ class MemoRepository {
   }
 
   async list() {
-    return await this.all("SELECT id, content FROM memos");
+    return await this.all("SELECT id, content FROM memos ORDER BY id ASC");
   }
 
   async delete(id) {
