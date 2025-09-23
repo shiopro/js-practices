@@ -35,7 +35,7 @@ class MemoApp {
 
       memoList.forEach((memo) => {
         const firstLine = memo.content.split("\n")[0];
-        console.log(`${firstLine}`);
+        console.log(firstLine);
       });
     } catch (error) {
       if (error instanceof ValidationError) {
