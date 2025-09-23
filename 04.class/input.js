@@ -34,7 +34,7 @@ async function selectMemo(choices) {
       type: "list",
       name: "selectedMemo",
       message: "Choose a note you want to see:",
-      choices: choices,
+      choices,
     },
   ]);
   return answer.selectedMemo;
