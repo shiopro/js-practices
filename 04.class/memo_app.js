@@ -53,10 +53,8 @@ class MemoApp {
         throw new ValidationError("選択できるメモがありません");
       }
 
-      const memoList = await this.repository.list();
-      const selectedId = await selectMemo(choices);
-      const selectedRow = memoList.find((memo) => memo.id === selectedId);
-      console.log(selectedRow.content);
+      const selectedMemo = await selectMemo(choices);
+      console.log(selectedMemo.content);
     } catch (error) {
       if (error instanceof ValidationError) {
         console.error("メモ参照失敗:", error.message);
@@ -74,8 +72,8 @@ class MemoApp {
         throw new ValidationError("削除できるメモがありません");
       }
 
-      const deleteId = await selectMemo(choices);
-      await this.repository.delete(deleteId);
+      const deletedMemo = await selectMemo(choices);
+      await this.repository.delete(deletedMemo.id);
 
       console.log("メモ削除成功");
     } catch (error) {

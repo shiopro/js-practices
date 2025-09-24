@@ -24,7 +24,7 @@ async function buildChoices(repository) {
   const rows = await repository.list();
   return rows.map((row) => ({
     name: row.content.split("\n")[0],
-    value: row.id,
+    value: row,
   }));
 }
 
